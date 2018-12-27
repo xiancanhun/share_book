@@ -1,0 +1,5 @@
+'''
+auth:canhun
+'''
+
+DEBUG = True
