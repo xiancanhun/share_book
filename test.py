@@ -6,6 +6,22 @@ from flask import Flask,make_response
 app = Flask(__name__)
 #载入配置文件
 app.config.from_object('config')
+print(app.config['DEBUG'])
+
+''' 路由注册第一种方式'''
+@app.route('/hello/')
+def hello():
+    # return 'Hello,CanHun'
+    headers = {
+        'Content-type':'text/plain',
+        'charset':'utf - 8',
+        'location': 'http://www.bing.com'
+    }
+    return '<h1>Hello,CanHun</h1>',404  ,headers
+
+    # response = make_response('<h1>Hello,CanHun</h1>', 404)
+    # response.headers = headers
+    # return response
 
 
 if __name__ == '__main__':
