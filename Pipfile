@@ -1,6 +1,6 @@
 [[source]]
 name = "pypi"
-url = "https://pypi.org/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 verify_ssl = true
 
 [dev-packages]
@@ -12,8 +12,7 @@ pandas = "*"
 numpy = "*"
 lxml = "*"
 sqlalchemy = "*"
-mysqldb = "*"
-mysqlclient = {path = "C:/Users/Administrator/Downloads/mysqlclient-1.3.13-cp36-cp36m-win_amd64.whl"}
+mysqlclient = "*"
 html5lib = "*"
 
 [requires]
