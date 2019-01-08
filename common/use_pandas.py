@@ -8,7 +8,7 @@ url = '''https://mp.weixin.qq.com/s?__biz=MjM5MDI1ODUyMA==&mid=2672942422&idx=2&
 # 数据读取
 # df = pd.read_json('../a.json')
 '''1.创建数据框'''
-df = pd.DataFrame({
+df14 = pd.DataFrame({
                    "id":[1001,1002,1003,1004,1005,1006],
                    "date":pd.date_range('20130102', periods=6),
                    "city":['Beijing ', 'SH', ' guangzhou ', 'Shenzhen', 'shanghai', 'BEIJING '],
@@ -184,3 +184,8 @@ df11 = df.loc[(df['city'] != 'beijing'),['id','category','price']].sort_values(b
 df12 = df.query('city == ["shanghai","beijing"]')
 
 '''7.数据汇总'''
+
+# 7.1 对所有列进行计数汇总
+df.groupby('city').count()
+
+# 7.2
