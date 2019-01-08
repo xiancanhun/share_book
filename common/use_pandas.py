@@ -130,3 +130,57 @@ df_split = pd.DataFrame([x.split('-') for x in df['category']],index=df.index,co
 df = df.merge(df_split,right_index=True, left_index=True)
 
 '''5.数据提取'''
+# 5.1 按标签提取(loc)
+'''loc函数按数据表的索引标签进行提取'''
+# 按索引提取单行的数值
+df_new1 = df.loc[3]
+# 按索引提取区域行数值
+df_new2 = df.loc[1:2]
+
+#根据设置的索引数据提取
+#重置索引
+df.reset_index()
+#设置日期为索引
+df1 = df.set_index('date')
+#提取4日之前的所有数据
+df2 = df1[:'2013-01-04']
+
+
+# 5.2 按位置提取(iloc)
+'''使用iloc函数按位置对数据表中的数据进行提取，这里冒号前后的数字不再是索引的标签名称，而是数据所在的位置，从0开始'''
+# 使用iloc按位置区域提取数据
+df3 = df.iloc[:3,:2]
+# 使用iloc按位置单独提取数据
+df4 = df.iloc[[0,2,5],[4,5]]
+
+# 5.3 按标签和位置提取（ix）
+'''ix是loc和iloc的混合，既能按索引标签提取，也能按位置进行数据提取'''
+df5 = df1.ix[:'2013-01-03',:4]
+##提取前三个字符，并生成数据表
+df6 = df['category'].str[:3]
+
+'''6.数据筛选'''
+# 6.1 按条件提取（区域和条件值）
+# 判断city列是否为'shanghai'
+df['city'].isin(['shanghai'])  #返回city列同行数的bool值,是返回True,不是返回的是False
+#加入loc进行按条件提取数据
+df7 = df.loc[df['city'].isin(['shanghai','beijing'])]
+
+# 6.2 按条件筛选（与，或，非）
+# #使用“与”条件进行筛选  &
+df8 = df.loc[(df['age']>25) & (df['city'] == 'shanghai'),['id','category','price']]
+
+# #使用“或”条件进行筛选  |
+df9 = df.loc[(df['age']>25) | (df['city'] == 'shanghai'),['id','category','price']]
+# 对结果进行排序
+df10 = df.loc[(df['age']>25) | (df['city'] == 'shanghai'),['id','category','price']].sort_values(by='price')
+# 对结果进行汇总
+df10_count_price = df10.price.sum()
+
+# #使用“非”条件进行筛选
+df11 = df.loc[(df['city'] != 'beijing'),['id','category','price']].sort_values(by='price')
+
+# 6.3 使用query函数进行筛选
+df12 = df.query('city == ["shanghai","beijing"]')
+
+'''7.数据汇总'''
