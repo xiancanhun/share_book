@@ -8,7 +8,7 @@ url = '''https://mp.weixin.qq.com/s?__biz=MjM5MDI1ODUyMA==&mid=2672942422&idx=2&
 # 数据读取
 # df = pd.read_json('../a.json')
 '''1.创建数据框'''
-df14 = pd.DataFrame({
+df = pd.DataFrame({
                    "id":[1001,1002,1003,1004,1005,1006],
                    "date":pd.date_range('20130102', periods=6),
                    "city":['Beijing ', 'SH', ' guangzhou ', 'Shenzhen', 'shanghai', 'BEIJING '],
@@ -188,4 +188,41 @@ df12 = df.query('city == ["shanghai","beijing"]')
 # 7.1 对所有列进行计数汇总
 df.groupby('city').count()
 
-# 7.2
+# 7.2 对特定的ID列进行计数汇总
+df.groupby('city')['id'].count()
+# -- 在前面的基础上增加第二个列名称，分布对city和size两个字段进行计数汇总。 对两个字段进行汇总计数 根据city 和date去分组,根据id去统计个数
+df.groupby(['city','date'])['id'].count()
+# 对city字段进行汇总并计算price的合计和均值
+df.groupby('city')['price'].agg([len,np.sum,np.mean])
+
+# 7.3 数据透视
+pd.pivot_table(df,index=["city"],values=["price"],columns=["id"],aggfunc=[len,np.sum],fill_value=0,margins=True)
+
+'''8.数据统计'''
+# 8.1 简单的数据采样
+df.sample(n=3)
+#手动设置采样权重
+weights = [0, 0, 1, 0, 0.5, 0.5]
+df.sample(n=2, weights=weights)
+# 采样后不放回
+df1.sample(n=6, replace=False)
+#采样后放回
+df1.sample(n=2, replace=True)
+
+# 8.2 数据表描述性统计  round函数设置结果显示的小数位  T 是将表转至(行转列)
+# 数据表描述性统计
+df2 = df.describe().round(2).T
+
+# 标准差
+df.std().round(2)
+
+# 计算协方差
+df.cov().round(2)
+
+# 数据表相关性分析
+df.corr()
+
+# 两个字段间的协方差
+df['price'].cov(df['age'])
+
+
